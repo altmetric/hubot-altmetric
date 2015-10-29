@@ -21,13 +21,24 @@ module.exports = (robot) ->
 
     promise
 
+  postJSON = (url, data) ->
+    promise = new Promise()
+    robot.http(url)
+      .header('Content-Type', 'application/json')
+      .post(JSON.stringify(data)) (err, res, body) ->
+        if err
+          promise.reject(err)
+        else
+          promise.resolve(JSON.parse(body))
+
+    promise
+
   robot.respond /donut me (.+)$/i, (res) ->
     id = res.match[1]
-    getJSON("http://api.altmetric.com/v1/translate/#{ id }")
+    postJSON('http://api.altmetric.com/v1/translate', ids: id)
       .then (results) ->
-        altmetric_id = results[id]
-        if altmetric_id
-          getJSON("http://api.altmetric.com/v1/id/#{ altmetric_id }?include_sections=images")
+        if results.hasOwnProperty(id)
+          getJSON("http://api.altmetric.com/v1/id/#{ results[id] }?include_sections=images")
         else
           res.send 'Sorry, I couldn\'t find any altmetrics for that identifier.'
       .then(

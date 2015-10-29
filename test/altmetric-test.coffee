@@ -15,7 +15,7 @@ describe 'altmetric', ->
   context 'user asks for a donut with altmetrics', ->
     beforeEach (done) ->
       nock('http://api.altmetric.com')
-        .get('/v1/translate/10.1629/2048-7754.79')
+        .post('/v1/translate', ids: '10.1629/2048-7754.79')
         .reply(200, { '10.1629/2048-7754.79': 1619179 })
         .get('/v1/id/1619179?include_sections=images')
         .reply(200, { altmetric_id: 1619179, images: { medium: 'http://donut/' } })
@@ -32,7 +32,7 @@ describe 'altmetric', ->
   context 'user asks for donut with no altmetrics', ->
     beforeEach (done) ->
       nock('http://api.altmetric.com')
-        .get('/v1/translate/10.1629/2048-7754.79')
+        .post('/v1/translate')
         .reply(404, {})
       @room.user.say 'alice', 'hubot donut me 10.1629/2048-7754.79'
       setTimeout done, 100
@@ -46,7 +46,7 @@ describe 'altmetric', ->
   context 'users asks for donut when the Altmetric API is down', ->
     beforeEach (done) ->
       nock('http://api.altmetric.com')
-        .get('/v1/translate/10.1629/2048-7754.79')
+        .post('/v1/translate')
         .replyWithError('Jings me boab!')
       @room.user.say 'alice', 'hubot donut me 10.1629/2048-7754.79'
       setTimeout done, 100
