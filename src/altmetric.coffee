@@ -2,8 +2,7 @@
 #   Delivering freshly-baked Altmetric donuts for scholarly identifiers on demand.
 #
 # Commands:
-#   hubot donut me IDENTIFIER - return a donut and details page for a scholarly
-#                               identifier
+#   hubot donut me <identifier> - return a donut and details page for a scholarly identifier
 #
 # Author:
 #   mudge
