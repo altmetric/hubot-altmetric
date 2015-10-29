@@ -32,7 +32,7 @@ module.exports = (robot) ->
           res.send 'Sorry, I couldn\'t find any altmetrics for that identifier.'
       .then(
         (citation) ->
-          res.send citation.images.medium
+          res.send "#{ citation.images.medium }#.png"
           res.send "http://www.altmetric.com/details/#{ citation.altmetric_id }"
         (error) ->
           res.send 'Sorry, I\'m struggling with the Altmetric API at the moment.'

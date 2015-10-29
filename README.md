@@ -22,7 +22,7 @@ Then add **hubot-altmetric** to your `external-scripts.json`:
 
 ```
 Hubot> hubot donut me 10.1629/2048-7754.79
-Hubot> https://altmetric-badges.a.ssl.fastly.net/?size=100&score=19&types=bttttttw
+Hubot> https://altmetric-badges.a.ssl.fastly.net/?size=100&score=19&types=bttttttw#.png
 Hubot> http://www.altmetric.com/details/1619179
 ```
 

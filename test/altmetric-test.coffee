@@ -18,14 +18,14 @@ describe 'altmetric', ->
         .get('/v1/translate/10.1629/2048-7754.79')
         .reply(200, { '10.1629/2048-7754.79': 1619179 })
         .get('/v1/id/1619179?include_sections=images')
-        .reply(200, { altmetric_id: 1619179, images: { medium: 'http://donut/foo.png' } })
+        .reply(200, { altmetric_id: 1619179, images: { medium: 'http://donut/' } })
       @room.user.say 'alice', 'hubot donut me 10.1629/2048-7754.79'
       setTimeout done, 100
 
     it 'responds with a donut and details page link', ->
       expect(@room.messages).to.eql [
         ['alice', 'hubot donut me 10.1629/2048-7754.79'],
-        ['hubot', 'http://donut/foo.png'],
+        ['hubot', 'http://donut/#.png'],
         ['hubot', 'http://www.altmetric.com/details/1619179']
       ]
 
