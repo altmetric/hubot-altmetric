@@ -6,10 +6,9 @@ helper = new Helper('../src/altmetric.coffee')
 
 describe 'altmetric', ->
   beforeEach ->
-    @room = helper.createRoom(http: false)
+    @room = helper.createRoom(httpd: false)
 
   afterEach ->
-    @room.destroy()
     nock.cleanAll()
 
   context 'user asks for a donut with altmetrics', ->
