@@ -11,26 +11,22 @@ Promise = require 'pacta'
 
 module.exports = (robot) ->
   getJSON = (url) ->
-    promise = new Promise()
-    robot.http(url).get() (err, res, body) ->
-      if err
-        promise.reject(err)
-      else
-        promise.resolve(JSON.parse(body))
-
-    promise
+    new Promise (resolve, reject) ->
+      robot.http(url).get() (err, res, body) ->
+        if err
+          reject(err.message)
+        else
+          resolve(JSON.parse(body))
 
   postJSON = (url, data) ->
-    promise = new Promise()
-    robot.http(url)
-      .header('Content-Type', 'application/json')
-      .post(JSON.stringify(data)) (err, res, body) ->
-        if err
-          promise.reject(err)
-        else
-          promise.resolve(JSON.parse(body))
-
-    promise
+    new Promise (resolve, reject) ->
+      robot.http(url)
+        .header('Content-Type', 'application/json')
+        .post(JSON.stringify(data)) (err, res, body) ->
+          if err
+            reject(err.message)
+          else
+            resolve(JSON.parse(body))
 
   robot.respond /donut me (.+)$/i, (res) ->
     id = res.match[1]
@@ -39,11 +35,9 @@ module.exports = (robot) ->
         if results.hasOwnProperty(id)
           getJSON("http://api.altmetric.com/v1/id/#{ results[id] }?include_sections=images")
         else
-          res.send 'Sorry, I couldn\'t find any altmetrics for that identifier.'
-      .then(
-        (citation) ->
-          res.send "#{ citation.images.medium }#.png"
-          res.send "http://www.altmetric.com/details/#{ citation.altmetric_id }"
-        (error) ->
-          res.send 'Sorry, I\'m struggling with the Altmetric API at the moment.'
-      )
+          throw "no altmetrics for #{id}"
+      .then (citation) ->
+        res.send "#{ citation.images.medium }#.png"
+        res.send "http://www.altmetric.com/details/#{ citation.altmetric_id }"
+      .catch (error) ->
+        res.send "Sorry, I couldn't donut that for you: #{error}"

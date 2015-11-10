@@ -39,19 +39,19 @@ describe 'altmetric', ->
     it 'responds with an error message', ->
       expect(@room.messages).to.eql [
         ['alice', 'hubot donut me 10.1629/2048-7754.79'],
-        ['hubot', 'Sorry, I couldn\'t find any altmetrics for that identifier.']
+        ['hubot', 'Sorry, I couldn\'t donut that for you: no altmetrics for 10.1629/2048-7754.79']
       ]
 
   context 'users asks for donut when the Altmetric API is down', ->
     beforeEach (done) ->
       nock('http://api.altmetric.com')
         .post('/v1/translate')
-        .replyWithError('Jings me boab!')
+        .replyWithError('Jings, crivens, help me boab!')
       @room.user.say 'alice', 'hubot donut me 10.1629/2048-7754.79'
       setTimeout done, 100
 
     it 'responds with an error message', ->
       expect(@room.messages).to.eql [
         ['alice', 'hubot donut me 10.1629/2048-7754.79'],
-        ['hubot', 'Sorry, I\'m struggling with the Altmetric API at the moment.']
+        ['hubot', 'Sorry, I couldn\'t donut that for you: Jings, crivens, help me boab!']
       ]

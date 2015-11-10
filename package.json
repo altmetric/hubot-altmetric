@@ -1,7 +1,7 @@
 {
   "name": "hubot-altmetric",
   "description": "Delivering freshly-baked Altmetric donuts for scholarly identifiers on demand",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Altmetric LLP <support@altmetric.com>",
   "license": "MIT",
   "keywords": "hubot, hubot-scripts",
@@ -13,7 +13,7 @@
     "url": "https://github.com/altmetric/hubot-altmetric/issues"
   },
   "dependencies": {
-    "pacta": "^0.5.1"
+    "pacta": "0.9.0"
   },
   "peerDependencies": {
     "hubot": "2.x"
