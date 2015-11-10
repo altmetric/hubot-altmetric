@@ -14,7 +14,7 @@ module.exports = (robot) ->
     new Promise (resolve, reject) ->
       robot.http(url).get() (err, res, body) ->
         if err
-          reject(err.message)
+          reject(err)
         else
           resolve(JSON.parse(body))
 
@@ -24,7 +24,7 @@ module.exports = (robot) ->
         .header('Content-Type', 'application/json')
         .post(JSON.stringify(data)) (err, res, body) ->
           if err
-            reject(err.message)
+            reject(err)
           else
             resolve(JSON.parse(body))
 
@@ -35,9 +35,9 @@ module.exports = (robot) ->
         if results.hasOwnProperty(id)
           getJSON("http://api.altmetric.com/v1/id/#{ results[id] }?include_sections=images")
         else
-          throw "no altmetrics for #{id}"
+          throw new RangeError("no altmetrics for #{id}")
       .then (citation) ->
         res.send "#{ citation.images.medium }#.png"
         res.send "http://www.altmetric.com/details/#{ citation.altmetric_id }"
       .catch (error) ->
-        res.send "Sorry, I couldn't donut that for you: #{error}"
+        res.send "Sorry, I couldn't donut that for you: #{error.message}"
